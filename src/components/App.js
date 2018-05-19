@@ -1,15 +1,18 @@
 import React from 'react';
-import Inventory from './Inventory';
 
 class App extends React.Component {
+
+  goToInventory = (event) => {
+    event.preventDefault();
+    this.props.history.push('/inventory');
+  }
+
   render() {
     return (
       <div>
-        <Inventory />
+        <button onClick={this.goToInventory}>Inventory</button>
 
-        <Cashier />
-
-        <Receipt />
+        <button>Point-of-Sale</button>
       </div>
     )
   }
