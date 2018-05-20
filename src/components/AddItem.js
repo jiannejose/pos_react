@@ -10,7 +10,15 @@ class AddItem extends React.Component {
   addItem = (event) => {
     event.preventDefault();
 
-    alert('hi');
+    const item = {
+      id: this.idRef.current.value,
+      name: this.nameRef.current.value,
+      price: this.priceRef.current.value,
+      quantity: this.quantityRef.current.value
+    }
+
+    this.props.history.push('/inventory');
+    console.log(item);
   };
 
   render() {
@@ -22,16 +30,16 @@ class AddItem extends React.Component {
 
         <form onSubmit={this.addItem}>
           <label htmlFor="id">Item ID Number:</label>
-          <input type="text" name="id" ref="idRef"/>
+          <input type="text" name="id" ref={this.idRef}/>
 
           <label htmlFor="name">Item Name:</label>
-          <input type="text" name="name" ref="nameRef"/>
+          <input type="text" name="name" ref={this.nameRef}/>
 
           <label htmlFor="price">Item Price:</label>
-          <input type="text" name="price" ref="priceRef"/>
+          <input type="text" name="price" ref={this.priceRef}/>
 
           <label htmlFor="quantity">Initial Quantity</label>
-          <input type="number" name="quantity" ref="quantityRef"/>
+          <input type="number" name="quantity" ref={this.quantityRef}/>
 
           <button type="submit">Add Item</button>
         </form>

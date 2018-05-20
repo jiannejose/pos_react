@@ -1,6 +1,5 @@
 import React from 'react';
 import ProductItem from './ProductItem';
-import AddItem from './AddItem';
 
 class Products extends React.Component {
   render() {
@@ -22,7 +21,6 @@ class Products extends React.Component {
           
         </table>
 
-        <AddItem></AddItem>
       </div>
 
     )
