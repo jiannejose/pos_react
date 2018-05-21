@@ -2,6 +2,10 @@ import React from 'react';
 
 class AddItem extends React.Component {
 
+  state = {
+    items: {},
+  };
+
   idRef = React.createRef();
   nameRef = React.createRef();
   priceRef = React.createRef();
@@ -10,16 +14,31 @@ class AddItem extends React.Component {
   addItem = (event) => {
     event.preventDefault();
 
+    // Create object item
     const item = {
-      id: this.idRef.current.value,
-      name: this.nameRef.current.value,
-      price: this.priceRef.current.value,
-      quantity: this.quantityRef.current.value
-    }
+      id: this.idRef.value.value,
+      name: this.nameRef.value.value,
+      price: this.priceRef.value.value,
+      quantity: this.quantityRef.value.value
+    };
 
+    // Save to local storage
+    const items = {...this.state.items};
+    items[Date.now()] = item;
+    localStorage.setItem('inventory', JSON.stringify(items));
+
+    // Go to /inventory
     this.props.history.push('/inventory');
-    console.log(item);
   };
+
+  componentDidMount() {
+    const localStorageRef = localStorage.getItem('inventory');
+    if(localStorageRef) {
+      this.setState({
+        items: JSON.parse(localStorageRef),
+      });
+    }
+  }
 
   render() {
     return (
@@ -45,8 +64,7 @@ class AddItem extends React.Component {
         </form>
 
       </div>
-
-      
+   
     )
   }
 }
