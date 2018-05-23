@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatPrice } from '../helpers';
 
 class AddItem extends React.Component {
 
@@ -25,7 +26,7 @@ class AddItem extends React.Component {
     const item = {
       id: this.idRef.value.value,
       name: this.nameRef.value.value,
-      price: this.priceRef.value.value,
+      price: parseFloat(this.priceRef.value.value),
       quantity: this.quantityRef.value.value
     };
 
@@ -59,12 +60,12 @@ class AddItem extends React.Component {
 
 
     // Save to local storage
-    // const items = {...this.state.items};
-    // items[Date.now()] = item;
-    // localStorage.setItem('inventory', JSON.stringify(items));
+    const items = {...this.state.items};
+    items[Date.now()] = item;
+    localStorage.setItem('inventory', JSON.stringify(items));
 
-    // // Go to /inventory
-    // this.props.history.push('/inventory');
+    // Go to /inventory
+    this.props.history.push('/inventory');
   };
 
   componentDidMount() {
