@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import App from './App';
-import Inventory from './Inventory';
+import Inventory from './Inventory/Inventory';
 import AddItem from './AddItem';
 
 const Router = () => (
