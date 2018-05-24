@@ -1,5 +1,4 @@
 import React from 'react';
-import { formatPrice } from '../helpers';
 
 class AddItem extends React.Component {
 
@@ -27,7 +26,7 @@ class AddItem extends React.Component {
       id: this.idRef.value.value,
       name: this.nameRef.value.value,
       price: parseFloat(this.priceRef.value.value),
-      quantity: this.quantityRef.value.value
+      quantity: parseFloat(this.quantityRef.value.value)
     };
 
     const foundItem = Object.keys(this.state.items).find((key) => {
