@@ -16,7 +16,15 @@ class Products extends React.Component {
           </thead>
           
           <tbody>
-            <ProductItem></ProductItem>
+            {Object.keys(this.props.items).map((key) => {
+              return (
+                <ProductItem
+                  key={key}
+                  item={this.props.items[key]}
+              />
+              )
+            })}
+        
           </tbody>
           
         </table>

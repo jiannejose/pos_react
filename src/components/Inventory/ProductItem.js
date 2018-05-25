@@ -4,12 +4,15 @@ import React from 'react';
 class ProductItem extends React.Component {
 
   render() {
+
+    const { id, name, price, quantity } = this.props.item;
+
     return (
       <tr>
-        <td>ID Number</td>
-        <td>Name</td>
-        <td>Price</td>
-        <td>Quantity</td>
+        <td>{id}</td>
+        <td>{name}</td>
+        <td>{price}</td>
+        <td>{quantity}</td>
       </tr>
     )
   }
