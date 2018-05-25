@@ -12,6 +12,7 @@ class Products extends React.Component {
               <th>Name</th>
               <th>Price</th>
               <th>Quantity</th>
+              <th>Actions</th>
             </tr>
           </thead>
           
@@ -20,7 +21,9 @@ class Products extends React.Component {
               return (
                 <ProductItem
                   key={key}
+                  index={key}
                   item={this.props.items[key]}
+                  deleteItem={this.props.deleteItem}
               />
               )
             })}

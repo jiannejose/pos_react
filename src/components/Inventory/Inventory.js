@@ -17,10 +17,28 @@ class Inventory extends React.Component {
     // get the items from local storage
     const items = JSON.parse(localStorage.getItem('inventory'));
     console.log(items);
-
+    if(!items) {
+      return;
+    }
     // set state
     this.setState({
       items: items,
+    });
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('inventory', JSON.stringify(this.state.items));
+  }
+
+  // DELETING ITEM
+  deleteItem = (key) => {
+    // make a copy of the state
+    const items = {...this.state.items};
+    // deleting specific item
+    delete items[key];
+    // update state
+    this.setState({
+      items
     });
   }
     
@@ -30,7 +48,7 @@ class Inventory extends React.Component {
       <div>
         <h2>Inventory</h2>
 
-        <Products items={this.state.items}/>
+        <Products items={this.state.items} deleteItem={this.deleteItem}/>
 
         <button onClick={this.goToAddItem}>+</button>
       </div>

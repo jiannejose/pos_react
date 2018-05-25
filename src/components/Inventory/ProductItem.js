@@ -13,6 +13,11 @@ class ProductItem extends React.Component {
         <td>{name}</td>
         <td>{formatPrice(price)}</td>
         <td>{quantity}</td>
+        <td>
+          <button onClick={() => this.props.deleteItem(this.props.index)}>Delete</button>
+          <button>Edit</button>
+          <button>+ Quantity</button>
+        </td>
       </tr>
     )
   }
