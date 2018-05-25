@@ -1,5 +1,5 @@
 import React from 'react';
-// import { formatPrice } from '../helpers';
+import { formatPrice } from '../../helpers';
 
 class ProductItem extends React.Component {
 
@@ -11,7 +11,7 @@ class ProductItem extends React.Component {
       <tr>
         <td>{id}</td>
         <td>{name}</td>
-        <td>{price}</td>
+        <td>{formatPrice(price)}</td>
         <td>{quantity}</td>
       </tr>
     )
