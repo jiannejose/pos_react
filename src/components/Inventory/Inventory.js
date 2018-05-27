@@ -41,6 +41,18 @@ class Inventory extends React.Component {
       items
     });
   }
+
+  // EDITING ITEM
+  updateItem = (key, updatedItem) => {
+    //make a copy of the state
+    const items = {...this.state.items};
+    // update specific item
+    items[key] = updatedItem;
+    // update the state 
+    this.setState({
+      items
+    });
+  }
     
 
   render() {
@@ -48,7 +60,12 @@ class Inventory extends React.Component {
       <div>
         <h2>Inventory</h2>
 
-        <Products items={this.state.items} deleteItem={this.deleteItem}/>
+        <Products
+          items={this.state.items}
+          deleteItem={this.deleteItem}
+          updateItem={this.updateItem}
+          history={this.props.history}
+        />
 
         <button onClick={this.goToAddItem}>+</button>
       </div>

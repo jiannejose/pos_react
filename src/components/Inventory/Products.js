@@ -24,6 +24,8 @@ class Products extends React.Component {
                   index={key}
                   item={this.props.items[key]}
                   deleteItem={this.props.deleteItem}
+                  updateItem={this.props.updateItem}
+                  history={this.props.history}
               />
               )
             })}
