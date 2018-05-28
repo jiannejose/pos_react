@@ -80,7 +80,7 @@ class AddItem extends React.Component {
       quantity: parseFloat(this.quantityRef.value.value)
     };
 
-    // calling valideForm function
+    // calling validateForm function
     this.validateForm(item); 
   };
 

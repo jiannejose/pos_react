@@ -16,7 +16,7 @@ class Inventory extends React.Component {
   componentDidMount() {
     // get the items from local storage
     const items = JSON.parse(localStorage.getItem('inventory'));
-    console.log(items);
+
     if(!items) {
       return;
     }
@@ -40,20 +40,7 @@ class Inventory extends React.Component {
     this.setState({
       items
     });
-  }
-
-  // EDITING ITEM
-  updateItem = (key, updatedItem) => {
-    //make a copy of the state
-    const items = {...this.state.items};
-    // update specific item
-    items[key] = updatedItem;
-    // update the state 
-    this.setState({
-      items
-    });
-  }
-    
+  } 
 
   render() {
     return (
@@ -63,7 +50,6 @@ class Inventory extends React.Component {
         <Products
           items={this.state.items}
           deleteItem={this.deleteItem}
-          updateItem={this.updateItem}
           history={this.props.history}
         />
 
