@@ -25,7 +25,6 @@ class AddItem extends React.Component {
 
   constructor() {
     super();
-
     const localStorageRef = localStorage.getItem('inventory');
     if(localStorageRef) {
       this.state.items = JSON.parse(localStorageRef);
@@ -33,7 +32,7 @@ class AddItem extends React.Component {
   }
 
   /**
-   * Add a new item 
+   * Adds a new item 
    * Calls validateForm and assignItem functions
    * 
    * @param object event

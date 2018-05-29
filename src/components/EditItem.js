@@ -6,10 +6,13 @@ class EditItem extends  React.Component {
   state = {
     items: {},
     errors: {
-      idErrorMsg: '',
-      nameErrorMsg: '',
-      priceErrorMsg: '',
-      quantityErrorMsg: '',
+      hasError: false,
+      messages: {
+        idErrorMsg: '',
+        nameErrorMsg: '',
+        priceErrorMsg: '',
+        quantityErrorMsg: '',
+      } 
     }
   };
 
@@ -19,26 +22,28 @@ class EditItem extends  React.Component {
   priceRef = React.createRef();
   quantityRef = React.createRef();
 
-  // GET ITEMS FROM LOCAL STORAGE
   constructor() {
     super();
-    // get the items from local storage
     const items = JSON.parse(localStorage.getItem('inventory'));
     if(!items) {
       return;
     }
-    // set state
+
     this.state.items = items;
   }
 
-  // UPDATE ITEM 
+  /**
+   * Updates item's data by getting the value of inputs via refs
+   * Calls validateForm function
+   * Update items state
+   * 
+   * @param object e
+   * @returns void
+   */
   updateItem = (e) => {
-    // prevent submitting the form
     e.preventDefault();
-
     const itemKey = this.props.match.params.itemKey;
 
-    // get the value of each input via refs
     const updatedItem = {
       id: this.idRef.value.value,
       name: this.nameRef.value.value,
@@ -46,68 +51,70 @@ class EditItem extends  React.Component {
       quantity: parseFloat(this.quantityRef.value.value),
     }
 
-    // calling validate form function
     this.validateForm(updatedItem, itemKey);
 
-    // make a copy of the items state
     const items = {...this.state.items};
 
     // update specific item 
     items[itemKey] = updatedItem;
 
-    // update the items state
-    this.setState({
-      items
-    });
+    this.setState({ items });
   }
 
-   // VALIDATE FORM FUNCTION
+  /**
+   * Validates form
+   * Updates errors state
+   * 
+   * @param object item
+   * @returns void
+   */
    validateForm = (item, itemKey) => {
-    // making a copy of the errors state
     const errors = {...this.state.errors};
+    const messages = errors.messages;
+    errors.hasError = false;
 
-    // assigning error message
     const foundItem = Object.keys(this.state.items).find((key) => {
       return (this.state.items[key].id === item.id && key !== itemKey);
     });        
 
     if(foundItem) {
-      errors.idErrorMsg = `The ID ${item.id} is already existing.`;
+      messages.id = `The ID ${item.id} is already existing.`;
+      errors.hasError = true;
     } else {
-      errors.idErrorMsg = '';
+      messages.id = '';
     }
 
     if(item.name === '') {
-      errors.nameErrorMsg = `The name must not be blank.`;
+      messages.name = `The name must not be blank.`;
+      errors.hasError = true;
     } else {
-      errors.nameErrorMsg = '';
+      messages.name = '';
     }
 
     if(item.price === '' || isNaN(item.price)) {
-      errors.priceErrorMsg = `The price must not be blank.`;
+      messages.price = `The price must not be blank.`;
+      errors.hasError = true;
     } else {
-      errors.priceErrorMsg = '';
+      messages.price = '';
     }
 
     if(item.quantity === '' || isNaN(item.quantity)) {
-      errors.quantityErrorMsg = `The quantity must not be blank.`;
+      messages.quantity = `The quantity must not be blank.`;
+      errors.hasError = true;
     } else {
-      errors.quantityErrorMsg = '';
+      messages.quantity = '';
     }
 
-    // saving the error messages on the state from the copy
-    this.setState({
-      errors
-    });
+    this.setState({ errors });
   }
   
-  // COMPONENT DID UPDATE
+  /**
+   * @inheritdoc
+   */
   componentDidUpdate() {
-    // validating before saving to local storage
     const errors = this.state.errors;
-    if(errors.idErrorMsg === '' && errors.nameErrorMsg === '' && errors.priceErrorMsg === '' && errors.quantityErrorMsg === '') {
+    if(!errors.hasError) {
       localStorage.setItem('inventory', JSON.stringify(this.state.items));
-      // going back to inventory page
       this.props.history.push('/inventory');
     } 
   }
@@ -124,19 +131,19 @@ class EditItem extends  React.Component {
         <form onSubmit={this.updateItem}>
           <label htmlFor="id">Item ID Number:</label>
           <input type="text" name="id" ref={this.idRef} defaultValue={item.id} />
-          <p>{this.state.errors.idErrorMsg}</p>
+          <p>{this.state.errors.messages.id}</p>
 
           <label htmlFor="name">Item Name:</label>
           <input type="text" name="name" ref={this.nameRef} defaultValue={item.name}/>
-          <p>{this.state.errors.nameErrorMsg}</p>
+          <p>{this.state.errors.messages.name}</p>
 
           <label htmlFor="price">Item Price:</label>
           <input type="text" name="price" ref={this.priceRef} defaultValue={item.price}/>
-          <p>{this.state.errors.priceErrorMsg}</p>
+          <p>{this.state.errors.messages.price}</p>
 
           <label htmlFor="quantity">Initial Quantity</label>
           <input type="number" name="quantity" ref={this.quantityRef} defaultValue={item.quantity}/>
-          <p>{this.state.errors.quantityErrorMsg}</p>
+          <p>{this.state.errors.messages.quantity}</p>
 
           <button type="submit">Update Item</button>
         </form>
